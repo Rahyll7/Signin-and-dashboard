@@ -1,26 +1,21 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const Dashboard = () => {
-  const [data, setData] = useState();
-  const [checkData, setCheckData] = useState("");
+  //   const { userName } = useParams();
+
+  const [data, setData] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:9000/contact").then((res) => {
-      console.log(res.data, "Dashboard check");
-      res.data.map((i) => {
-        setCheckData(i);
-        console.log(i);
-      });
+      setData(res.data);
     });
   }, []);
 
   const renderTable = () => {
     return (
       <>
-        {checkData.map((i) => {
-          console.log(i);
-        })}
+        <h2>Welcome, {data[0].userName}</h2>
       </>
     );
   };
@@ -28,7 +23,7 @@ const Dashboard = () => {
   return (
     <>
       <h1>Dashboard</h1>
-      {/* {renderTable()} */}
+      {renderTable()}
     </>
   );
 };
